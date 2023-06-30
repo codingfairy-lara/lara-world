@@ -1,8 +1,19 @@
 # Lara World
 
-미니 홈피를 통해 일상을 공유하고 소통하는 Spring 기반의 소셜 네트워킹 웹 서비스
+Spring 기반의 소셜 네트워킹 웹 프로젝트
 
-## 기능
+## ✨ 프로젝트 소개
+
+#### 사이좋은 사람들, 라라월드 :)
+
+라라월드는 싸이월드를 오마주하여 개발된 소셜 네트워킹 웹 서비스입니다.<br>
+라라월드에서는 자신의 미니홈피를 꾸미고, 일상과 관심사를 공유하며, 여러 사람들과 소통할 수 있습니다.
+
+## 🗓️ 개발 기간
+
+* 2023.04.11 ~ 2023.06.16
+
+## 📌 주요 기능
 
 * #### 회원
   * 회원 가입
@@ -11,7 +22,7 @@
   * 회원 검색 🔍 
     (회원ID 검색 / 회원명 검색 / 이메일 주소 검색)
     
-* #### 일촌 기능
+* #### 일촌
   * 일촌 관리
     (일촌 신청 / 일촌명 변경 / 일촌 끊기)
   * 일촌평 작성
@@ -50,16 +61,17 @@
     - 방명록 작성 권한
       (전체 허용 / 일촌만 허용 / 모두 허용 안함)
 
-## 기술
+## 📚 기술
 
 ### Environment
 <div>
   <img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=for-the-badge&logo=eclipse&logoColor=white">
-  <img src="https://img.shields.io/badge/visual studio code-5C2D91?style=for-the-badge&logo=visualstudiocode&logoColor=white">
+  <img src="https://img.shields.io/badge/visual studio code-1E96EB?style=for-the-badge&logo=visualstudiocode&logoColor=white">
   <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
   <br>
+  <img src="https://img.shields.io/badge/FileZilla-BF0000?style=for-the-badge&logo=FileZilla&logoColor=white">
   <img src="https://img.shields.io/badge/adobe photoshop-05376e?style=for-the-badge&logo=adobephotoshop&logoColor=white">
-  <img src="https://img.shields.io/badge/fontawesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white">
+  <img src="https://img.shields.io/badge/fontawesome-5C2D91?style=for-the-badge&logo=fontawesome&logoColor=white">
 </div>
 
 ### Development
