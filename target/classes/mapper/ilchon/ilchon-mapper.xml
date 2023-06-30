@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.laraworld.ilchon.model.dao.IlchonDao">
+		
+	<insert id="enrollIlchon">
+		insert into 
+			ilchon (no, member_id1, member_id2, hompy_id1, hompy_id2 
+				<if test="ilchonName1 != ''">,ilchon_name1</if>
+				<if test="ilchonName2 != ''">,ilchon_name2</if>
+				<if test="msg != ''">,msg</if>
+			) 
+		values (
+			seq_ilchon_no.nextval,
+			#{memberId1},
+			#{memberId2},
+			#{hompyId1},
+			#{hompyId2}
+				<if test="ilchonName1 != ''">,#{ilchonName1}</if>
+				<if test="ilchonName2 != ''">,#{ilchonName2}</if>
+				<if test="msg != ''">,#{msg}</if>
+			)
+		<selectKey order="AFTER" resultType="_int" keyProperty="no">
+			select 
+				seq_ilchon_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
+	
+	<select id="getIlchonList" resultMap="ilchonCollectionMap">
+		select
+		    i.*,
+		    m1.name as name1,
+		    m2.name as name2,
+		    m1.gender as gender
+		from
+		    ilchon i
+		        left join member m1
+		            on i.MEMBER_ID1 = m1.MEMBER_ID
+		        left join member m2
+		            on i.MEMBER_ID2 = m2.MEMBER_ID
+		where
+			(MEMBER_ID1 = #{memberId}
+			or
+		    MEMBER_ID2 = #{memberId})
+		    and
+		    status > 0
+		order by 
+		    name1 desc
+	</select>
+	
+	<select id="getAllIlchonList" resultMap="ilchonCollectionMap">
+		select
+		    i.*,
+		    m1.name as name1,
+		    m2.name as name2,
+		    m1.gender as gender
+		from
+		    ilchon i
+		        left join member m1
+		            on i.MEMBER_ID1 = m1.MEMBER_ID
+		        left join member m2
+		            on i.MEMBER_ID2 = m2.MEMBER_ID
+		where
+			(MEMBER_ID1 = #{memberId}
+			or
+		    MEMBER_ID2 = #{memberId})
+		order by 
+		    name1 desc
+	</select>
+	
+	<select id="getIlchonRequests" resultMap="ilchonCollectionMap">
+		select
+		    i.*,
+		    m1.name as name1,
+		    m2.name as name2,
+		    m1.gender as gender
+		from
+		    ilchon i
+		        left join member m1
+		            on i.MEMBER_ID1 = m1.MEMBER_ID
+		        left join member m2
+		            on i.MEMBER_ID2 = m2.MEMBER_ID
+		where
+		    MEMBER_ID2 = #{memberId}
+		    and
+		    status = 0
+		order by 
+		    i.no desc
+	</select>
+	
+	<select id="getEditRequests" resultMap="ilchonCollectionMap">
+		select
+		    i.*,
+		    m1.name as name1,
+		    m2.name as name2,
+		    m1.gender as gender
+		from
+		    ilchon i
+		        left join member m1
+		            on i.MEMBER_ID1 = m1.MEMBER_ID
+		        left join member m2
+		            on i.MEMBER_ID2 = m2.MEMBER_ID
+		where
+		    MEMBER_ID2 = #{memberId}
+		    and
+		    status = 2
+		order by 
+		    i.no desc
+	</select>
+	
+	<select id="showIlchonRequest" resultMap="ilchonCollectionMap">
+		select
+		    i.*,
+		    m1.name as name1,
+		    m2.name as name2,
+		    m1.gender as gender
+		from
+		    ilchon i
+		        left join member m1
+		            on i.MEMBER_ID1 = m1.MEMBER_ID
+		        left join member m2
+		            on i.MEMBER_ID2 = m2.MEMBER_ID
+		where
+		    no = #{no}
+	</select>
+	
+	<resultMap type="ilchon" id="ilchonCollectionMap">
+		<id column="no" property="no"/>
+		<result column="member_id1" property="memberId1"/>
+		<result column="member_id2" property="memberId2"/>
+		<result column="hompy_id1" property="hompyId1"/>
+		<result column="hompy_id2" property="hompyId2"/>
+		<result column="ilchon_name1" property="ilchonName1"/>
+		<result column="ilchon_name2" property="ilchonName2"/>
+		<result column="new_name1" property="newName1"/>
+		<result column="new_name2" property="newName2"/>
+	</resultMap>
+	
+	<update id="acceptIlchonRequest">
+		update 
+			ilchon
+		set
+			status = 1
+		WHERE
+			no = #{no}
+	</update>
+	
+	<update id="acceptEditRequest">
+		update 
+			ilchon
+		set
+			ilchon_name1 = #{newName1}, ilchon_name2 = #{newName2},
+			new_name1 = null, new_name2 = null, status = 1 
+		WHERE
+			no = #{no}
+	</update>
+	
+	<update id="editIlchonName">
+		update 
+			ilchon
+		set
+			member_id1 = #{memberId1}, member_id2 = #{memberId2},
+			hompy_id1 = #{hompyId1}, hompy_id2 = #{hompyId2},
+			ilchon_name1 = #{ilchonName1}, ilchon_name2 = #{ilchonName2}, 
+			new_name1 = #{newName1}, new_name2 = #{newName2}, 
+			status = 2
+		WHERE
+			no = #{no}
+	</update>
+	
+	<delete id="deleteIlchon">
+		DELETE
+			FROM ilchon
+		WHERE
+			no = #{no}
+	</delete>
+	
+
+</mapper>

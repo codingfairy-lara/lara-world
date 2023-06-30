@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.laraworld.profile.model.dao.ProfileDao">
+
+	<resultMap type="profile" id="profileMap">	</resultMap>
+	<resultMap type="attachment" id="attachmentMap"></resultMap>
+	
+	<insert id="insertProfile">
+		insert into 
+			profiles (no, hompy_id, content) 
+		values (
+			seq_profile_no.nextval,
+			#{hompyId},
+			#{content}
+		)
+		<selectKey order="AFTER" resultType="_int" keyProperty="no">
+			select 
+				seq_profile_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
+	
+	<insert id="insertAttachment">
+		insert into 
+			profile_attachment
+		values(
+			seq_profile_attachment_no.nextval, 
+			#{profileNo}, 
+			#{originalFilename}, 
+			#{renamedFilename}, 
+			default
+		)
+	</insert>
+	
+	<select id="selectRecentProfile" resultMap="profileCollectionMap">
+		select
+		    b.*,
+		    a.*,
+		    a.no attach_no,
+		    m.*
+		from
+		    profiles b 
+		        left join profile_attachment a
+		            on b.no = a.profile_no
+		         left join minihompy m
+		            on b.hompy_id = m.hompy_id	
+		where
+		    m.hompy_id = #{hompyId}
+		    and
+		    b.no = (SELECT max(b.no) FROM profiles b)
+	</select>
+	
+	<select id="selectProfileHistory" resultMap="profileCollectionMap">
+		select
+		    b.*,
+		    a.*,
+		    a.no attach_no,
+		    m.*
+		from
+		    profiles b 
+		        left join profile_attachment a
+		            on b.no = a.profile_no
+		         left join minihompy m
+		            on b.hompy_id = m.hompy_id	
+		where
+		    m.hompy_id = #{hompyId}
+		order by 
+		    b.no desc
+	</select>
+	
+	<!-- collection, association태그 사용시에는 id/result태그를 생략할 수 없다. -->
+	<resultMap type="profile" id="profileCollectionMap">
+		<id column="no" property="no"/>
+		<result column="hompy_id" property="hompyId"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<association property="miniHompy" javaType="miniHompy">
+			<id column="hompy_id" property="hompyId"/>
+			<result column="member_id" property="memberId"/>
+		</association>
+		<association property="attachment" javaType="attachment">
+			<id column="attach_no" property="no"/>
+			<result column="original_filename" property="originalFilename"/>
+			<result column="renamed_filename" property="renamedFilename"/>
+			<result column="created_at" property="createdAt"/>
+		</association>
+	</resultMap>
+	
+	<delete id="deleteProfile">
+		delete from
+			profiles
+		where
+			no = #{no}
+	</delete>
+	
+	
+</mapper>

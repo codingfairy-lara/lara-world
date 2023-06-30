@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.laraworld.picture.model.dao.PictureDao">
+		
+	<resultMap type="picture" id="pictureMap"></resultMap>
+	<resultMap type="attachment" id="attachmentMap"></resultMap>
+
+	<insert id="insertPicture">
+		insert into 
+			picture (no, hompy_id, title, content) 
+		values (
+			seq_picture_no.nextval,
+			#{hompyId},
+			#{title},
+			#{content}
+		)
+		<selectKey order="AFTER" resultType="_int" keyProperty="no">
+			select 
+				seq_picture_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
+
+	<insert id="insertAttachment">
+		insert into 
+			picture_attachment
+		values(
+			seq_picture_attachment_no.nextval, 
+			#{pictureNo}, 
+			#{originalFilename}, 
+			#{renamedFilename}, 
+			default
+		)
+	</insert>
+
+	<select id="selectPictureList" resultMap="pictureCollectionMap">
+		select
+		    b.*,
+		    (select count(*) from picture_attachment where picture_no = b.no) attach_count,
+		    a.*,
+		    a.no attach_no,
+		    m.*
+		from
+		    picture b 
+		        left join picture_attachment a
+		            on b.no = a.picture_no
+		         left join minihompy m
+		            on b.hompy_id = m.hompy_id	
+		where
+		    m.hompy_id = #{hompyId} and b.status > 0
+		order by 
+		    b.no desc
+	</select>
+	
+	<insert id="enrollPictureComment">
+		insert into 
+			picture_comment (no, picture_no, hompy_id, writer_id, member_name, content, comment_level, comment_ref) 
+		values (
+			seq_picture_comment_no.nextval,
+			#{pictureNo},
+			#{hompyId},
+			#{writerId},
+			#{memberName},
+			#{content},
+			#{commentLevel},
+			#{commentRef}			
+		)
+		<selectKey order="AFTER" resultType="_int" keyProperty="no">
+			select 
+				seq_picture_comment_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
+	
+	<select id="selectCommentList" resultMap="pictureCommentMap">
+		select 
+	    	*
+	    from
+	    	picture_comment
+	    where
+	    	hompy_id = #{hompyId} and status > 0
+	    start with
+	    	comment_level = 1    
+	    connect by
+	    	prior no = comment_ref
+	    order siblings by
+	    	no asc
+	</select>
+	
+	
+	<select id="selectTotalCount" resultType="_int">
+		select 
+			count(*)
+		from
+			picture
+		where
+			hompy_id = #{hompyId} and status > 0
+	</select>
+
+	<!-- collection, association태그 사용시에는 id/result태그를 생략할 수 없다. -->
+	<resultMap type="picture" id="pictureCollectionMap">
+		<id column="no" property="no"/>
+		<result column="hompy_id" property="hompyId"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="status" property="status"/>
+		<result column="attach_count" property="attachCount"/>
+		<association property="miniHompy" javaType="miniHompy">
+			<id column="hompy_id" property="hompyId"/>
+			<result column="member_id" property="memberId"/>
+		</association>
+		<collection property="attachments" ofType="attachment">
+			<id column="attach_no" property="no"/>
+			<result column="original_filename" property="originalFilename"/>
+			<result column="renamed_filename" property="renamedFilename"/>
+			<result column="created_at" property="createdAt"/>
+		</collection>
+	</resultMap>
+
+	<resultMap type="pictureComment" id="pictureCommentMap">
+		<result column="hompy_id" property="hompyId"/>
+		<result column="picture_no" property="pictureNo"/>
+		<result column="writer_id" property="writerId"/>
+		<result column="member_name" property="memberName"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="comment_level" property="commentLevel"/>
+		<result column="comment_ref" property="commentRef"/>
+		<result column="reg_date" property="regDate"/>
+	</resultMap>
+	
+
+	<delete id="deletePicture">
+		update 
+			picture 
+		set 
+			status = 0
+		where 
+			no = #{no}
+	</delete>
+		
+	<update id="deleteComment">
+		update 
+			picture_comment 
+		set 
+			status = 0
+		where 
+			no = #{no}
+	</update>
+	
+	
+
+</mapper>

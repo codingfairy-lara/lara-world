@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.laraworld.member.model.dao.MemberDao">
+<!-- #6.2. @Mapper인터페이스를 namespace로 지정 -->
+
+	<insert id="insertMember">
+		insert into 
+			member 
+		values	(
+			#{memberId},
+			#{password},
+			#{name},
+			#{gender},
+			#{birthday},
+			#{email},
+			#{phone}, 
+			default, 
+			default)
+	</insert>
+	
+	<insert id="insertMemberRole">
+		insert into 
+			authority
+		values	(
+			#{memberId},
+			default)
+	</insert>
+	
+	<select id="selectOneMember" resultMap="memberMap">
+		select
+			m.*,
+            h.hompy_id hompy_id
+		from
+			member m 
+                left join
+                minihompy h
+                    on m.member_id = h.member_id
+		where
+			m.member_id = #{memberId}
+	</select>
+	<select id="searchMember" resultMap="memberMap">
+		select
+			m.*,
+            h.hompy_id hompy_id
+		from
+			member m 
+                left join
+                minihompy h
+                    on m.member_id = h.member_id
+		where
+		<choose>
+			<when test="param.equals('searchId')">
+				m.member_id LIKE '%'||#{argument}||'%'
+			</when>
+			<when test="param.equals('searchEmail')">
+				(m.email LIKE '%'||#{argument}||'%')
+				and
+				(h.email_privacy = 1)
+			</when>
+			<when test="param.equals('searchName')">
+				m.name LIKE '%'||#{argument}||'%'
+			</when>
+		</choose>
+	</select>
+	<select id="searchByEmail" resultMap="memberMap">
+		select
+			m.*,
+            h.hompy_id hompy_id
+		from
+			member m 
+                left join
+                minihompy h
+                    on m.member_id = h.member_id
+		where
+			(m.email LIKE '%'||#{email}||'%')
+			and
+			(h.email_privacy = 1)
+	</select>
+	
+	<resultMap type="member" id="memberMap">
+		<id column="member_id" property="memberId"/>
+		<result column="password" property="password"/>
+		<result column="name" property="name"/>
+		<result column="gender" property="gender"/>
+		<result column="birthday" property="birthday"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="enabled" property="enabled"/>
+		<result column="hompy_id" property="hompyId"/>
+		<association property="miniHompy" javaType="miniHompy">
+			<id column="hompy_id" property="hompyId"/>
+			<result column="member_id" property="memberId"/>
+		</association>
+	</resultMap>
+	
+	<update id="updateMember">
+		update 
+			member 
+		set 
+			name = #{name}, 
+			birthday = #{birthday}, 
+			email = #{email}, 
+			phone = #{phone}
+		where 
+			member_id = #{memberId}
+	</update>
+	
+	
+</mapper>

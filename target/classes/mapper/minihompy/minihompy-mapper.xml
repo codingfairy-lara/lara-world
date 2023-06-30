@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.laraworld.minihompy.model.dao.MiniHompyDao">
+<!-- #6.2. @Mapper인터페이스를 namespace로 지정 -->
+
+	
+<!-- 	<insert id="insertMiniHompy" resultMap="miniHompyMap"> -->
+	<insert id="insertMiniHompy">
+		insert into 
+			minihompy (hompy_id, member_id, title, visit_total, visit_today, diary, picture, guestbook, ilchon_talk, name)
+		values (
+			seq_minihompy_id.nextval,
+			#{memberId}, 
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT,
+			#{name})
+		<selectKey keyProperty="hompyId" resultType="int" order="AFTER">
+			select seq_minihompy_id.currval from dual
+		</selectKey>
+	</insert>
+	
+	<insert id="enrollIlchontalk">
+		insert into 
+			ilchon_talk (no, hompy_id, writer_id, ilchon_no, content)
+		values (
+			seq_ilchon_talk_no.nextval,
+			#{hompyId}, 
+			#{writerId}, 
+			#{ilchonNo}, 
+			#{content})
+		<selectKey keyProperty="hompyId" resultType="int" order="AFTER">
+			select seq_ilchon_talk_no.currval from dual
+		</selectKey>
+	</insert>
+	
+	<select id="selectMiniHompy1" resultMap="miniHompyMap">
+		select
+			a.*,
+			m.*
+		from
+			minihompy a
+		        left join member m
+		            on a.MEMBER_ID = m.MEMBER_ID
+		where
+			hompy_id = #{hompyId}
+	</select>
+	
+	<select id="selectMiniHompy2" resultMap="miniHompyMap">
+		select
+			*
+		from
+			minihompy
+		where
+			member_id = #{username}
+	</select>
+	
+	<select id="getHompyList" resultMap="miniHompyMap">
+		select
+			*
+		from
+			minihompy
+		where
+			hompy_id != #{hompyId}
+			and
+			wave = 1
+	</select>
+
+	<select id="getIlchontalkList" resultMap="ilchonTalkMap">
+		select
+		    t.*,
+		    i.*
+		from
+		    ilchon_talk t
+                left join
+		    (select
+                i.*,
+                m1.name as name1,
+                m2.name as name2,
+                m1.gender as gender
+            from
+                ilchon i
+                    left join member m1
+                        on i.MEMBER_ID1 = m1.MEMBER_ID
+                    left join member m2
+                        on i.MEMBER_ID2 = m2.MEMBER_ID) i
+                on t.ilchon_no = i.no
+		where
+		    t.hompy_id = #{hompyId}
+		    and
+		    t.rowid in (select max(rowid) from ilchon_talk group by no)
+		order by
+		    t.no desc
+	</select>
+		
+	<resultMap type="ilchonTalk" id="ilchonTalkMap">
+		<id column="no" property="no"/>
+		<result column="hompy_id" property="hompyId"/>
+		<result column="writer_id" property="writerId"/>
+		<result column="ilchon_no" property="ilchonNo"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="status" property="status"/>
+		<association property="ilchon" javaType="ilchon">
+			<id column="no" property="no"/>
+			<result column="member_id1" property="memberId1"/>
+			<result column="member_id2" property="memberId2"/>
+			<result column="hompy_id1" property="hompyId1"/>
+			<result column="hompy_id2" property="hompyId2"/>
+			<result column="ilchon_name1" property="ilchonName1"/>
+			<result column="ilchon_name2" property="ilchonName2"/>
+			<result column="name1" property="name1"/>
+			<result column="name2" property="name2"/>
+		</association>
+	</resultMap>
+
+	<select id="getCountInfo" resultMap="countMap">
+		<![CDATA[
+		SELECT 
+			(SELECT COUNT(*) FROM diary where hompy_id=#{hompyId} and status > 0) cnt_d,
+			(SELECT COUNT(*) FROM diary where hompy_id=#{hompyId} and (CURRENT_DATE - created_at < 3) and status > 0) rcnt_d,
+			(SELECT COUNT(*) FROM picture where hompy_id=#{hompyId} and status > 0) cnt_p, 
+			(SELECT COUNT(*) FROM picture where hompy_id=#{hompyId} and (CURRENT_DATE - created_at < 3) and status > 0) rcnt_p, 
+			(SELECT COUNT(*) FROM guest_book where hompy_id=#{hompyId} and status > 0) cnt_g,
+			(SELECT COUNT(*) FROM guest_book where hompy_id=#{hompyId} and (CURRENT_DATE - created_at < 3) and status > 0) rcnt_g
+		FROM DUAL
+		]]>
+	</select>
+	
+	<select id="selectDiaryList" resultMap="diaryMap">
+		<![CDATA[
+		SELECT * FROM diary where hompy_id=#{hompyId} and (CURRENT_DATE - created_at < 3) and status between 1 and 2 order by created_at desc
+		]]>
+	</select>
+	
+	<select id="selectPictureList" resultMap="pictureMap">
+		<![CDATA[
+		SELECT * FROM picture where hompy_id=#{hompyId} and (CURRENT_DATE - created_at < 3) and status between 1 and 2 order by created_at desc
+		]]>
+	</select>
+	
+	<select id="selectGuestBookList" resultMap="guestBookMap">
+		<![CDATA[
+		SELECT * FROM guest_book where hompy_id=#{hompyId} and (CURRENT_DATE - created_at < 3) and status between 1 and 2 order by created_at desc
+		]]>
+	</select>
+	
+	<select id="getRecentPosts" resultMap="recentPostsMap">
+		SELECT 
+			*
+		FROM
+			minihompy
+		where
+			hompy_id = #{hompyId}
+	</select>
+		
+	<resultMap type="count" id="countMap">
+		<result column="cnt_d" property="cntD"/>
+		<result column="cnt_p" property="cntP"/>
+		<result column="cnt_g" property="cntG"/>
+		<result column="rcnt_d" property="rcntD"/>
+		<result column="rcnt_p" property="rcntP"/>
+		<result column="rcnt_g" property="rcntG"/>
+	</resultMap>
+		
+	<resultMap type="recentPosts" id="recentPostsMap">
+		<collection property="diaryList" column="hompy_id" ofType="..diary" select="selectDiaryList"/>
+		<collection property="pictureList" column="hompy_id" ofType="..picture" select="selectPictureList"/>
+		<collection property="guestBookList" column="hompy_id" ofType="..guestBook" select="selectGuestBookList"/>
+	</resultMap>
+	
+	<resultMap type="diary" id="diaryMap">
+		<id column="no" property="no"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	<resultMap type="picture" id="pictureMap">
+		<id column="no" property="no"/>
+		<result column="title" property="title"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	<resultMap type="guestBook" id="guestBookMap">
+		<id column="no" property="no"/>
+		<result column="member_name" property="memberName"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="status" property="status"/>
+	</resultMap>
+
+	<resultMap type="miniHompy" id="miniHompyMap">
+		<id column="hompy_id" property="hompyId"/>
+		<result column="member_id" property="memberId"/>
+		<result column="title" property="title"/>
+		<result column="visit_total" property="visitTotal"/>
+		<result column="visit_today" property="visitToday"/>
+		<result column="room_color" property="roomColor"/>
+		<result column="background" property="background"/>
+		<result column="index_color" property="indexColor"/>
+		<result column="border_color" property="borderColor"/>
+		<result column="ilchon_talk" property="ilchonTalk"/>
+		<result column="miniroom" property="miniroom"/>
+		<result column="diary" property="diary"/>
+		<result column="picture" property="picture"/>
+		<result column="guestbook" property="guestbook"/>
+		<result column="ilchon_talk" property="ilchonTalk"/>
+		<result column="email_privacy" property="emailPrivacy"/>
+		<result column="birthday_privacy" property="birthdayPrivacy"/>
+		<result column="guestbook_access" property="guestbookAccess"/>
+		<result column="wave" property="wave"/>
+		<result column="name" property="name"/>
+		<association property="member" javaType="member">
+			<id column="member_id" property="memberId"/>
+			<result column="name" property="name"/>
+			<result column="gender" property="gender"/>
+			<result column="birthday" property="birthday"/>
+			<result column="email" property="email"/>
+		</association>
+	</resultMap>
+	
+	<update id="editPreviousIlchontalk">
+		update 
+			ilchon_talk
+		set
+			status = 0
+		WHERE
+			hompy_id = #{hompyId}
+			and
+			writer_id = #{writerId}
+			and
+			ilchon_no = #{ilchonNo}
+	</update>
+	
+	<update id="updateVistCount">
+		update 
+			minihompy
+		set
+			visit_total = visit_total + 1,
+		 	visit_today = visit_today + 1
+		WHERE hompy_id = #{hompyId}
+	</update>
+	
+	<update id="editTitle">
+		update 
+			minihompy
+		set
+			title = #{title}
+		WHERE
+			hompy_id = #{hompyId}
+	</update>
+	
+	<update id="deleteIlchontalk">
+		update 
+			ilchon_talk
+		set
+			status = 0
+		WHERE
+			no = #{no}
+	</update>
+	
+	<update id="editColor">
+		update 
+			minihompy
+		set
+		<choose>
+			<when test="param.equals('background')">
+			background = #{color}
+			</when>
+			<when test="param.equals('borderColor')">
+			border_color = #{color}
+			</when>
+			<when test="param.equals('indexColor')">
+			index_color = #{color}
+			</when>
+			<when test="param.equals('roomColor')">
+			room_color = #{color}
+			</when>
+		</choose>
+		WHERE
+			hompy_id = #{hompyId}
+	</update>
+	
+	<update id="editHompy">
+		update 
+			minihompy
+		set
+		<choose>
+			<when test="param.equals('emailPrivacy')">
+			email_privacy = #{val}
+			</when>
+			<when test="param.equals('birthdayPrivacy')">
+			birthday_privacy = #{val}
+			</when>
+			<when test="param.equals('miniroom')">
+			miniroom = #{val}
+			</when>
+			<when test="param.equals('ilchonTalk')">
+			ilchon_talk = #{val}
+			</when>
+			<when test="param.equals('wave')">
+			wave = #{val}
+			</when>
+			<when test="param.equals('diary')">
+			diary = #{val}
+			</when>
+			<when test="param.equals('picture')">
+			picture = #{val}
+			</when>
+			<when test="param.equals('guestbook')">
+			guestbook = #{val}
+			</when>
+			<when test="param.equals('guestbookAccess')">
+			guestbook_access = #{val}
+			</when>
+		</choose>
+		WHERE
+			hompy_id = #{hompyId}
+	</update>
+
+	
+</mapper>

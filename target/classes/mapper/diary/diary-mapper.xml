@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.laraworld.diary.model.dao.DiaryDao">
+
+<!-- 	<resultMap type="diary" id="diaryMap">	</resultMap> -->
+	
+	<insert id="insertDiary">
+		insert into 
+			diary (no, hompy_id, content, diary_date) 
+		values (
+			seq_diary_no.nextval,
+			#{hompyId},
+			#{content},
+			#{diaryDate}
+		)
+		<selectKey order="AFTER" resultType="_int" keyProperty="no">
+			select 
+				seq_diary_no.currval
+			from
+				dual
+		</selectKey>
+	</insert>
+
+	<select id="selectDiaryList" resultMap="diaryMap">
+		select
+			*
+		from
+		    diary
+		where
+		    hompy_id = #{hompyId}
+		order by 
+		    diary_date desc
+	</select>
+
+	<resultMap type="diary" id="diaryMap">
+		<result column="hompy_id" property="hompyId"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="diary_date" property="diaryDate"/>
+	</resultMap>
+
+	<update id="deleteDiary">
+		update 
+			diary 
+		set 
+			status = 0
+		where 
+			no = #{no}
+	</update>
+	
+	<select id="selectDiaryDate"  resultMap="diaryMap">
+		select
+	    	b.*
+		from
+	    	diary b 
+		        left join minihompy a
+		            on b.hompy_id = a.hompy_id
+		         left join member m
+		            on a.member_id = m.member_id	
+		where
+		    b.diary_Date = to_date(#{diaryDate},'rr/mm/dd')
+		    and
+		    m.member_id = #{memberId}
+	</select>
+	
+	<select id="selectDiaryDate2"  resultMap="diaryMap">
+		select
+	    	*
+		from
+	    	diary
+		where
+		    diary_Date = to_date(#{diaryDate},'rr/mm/dd')
+		    and
+		    hompy_id = #{hompyId}
+	</select>
+
+</mapper>
