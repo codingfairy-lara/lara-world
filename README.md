@@ -10,6 +10,7 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
 라라월드에서는 자신의 미니홈피를 꾸미고, 일상과 관심사를 공유하며, 여러 사람들과 소통할 수 있습니다.
 <div>
   <img width="300" alt="home 화면" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/3784c74d-43b1-4e15-b249-e8c5ca81f924">
+  <img width="300" alt="home 일촌평" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/2fe0dd18-5638-4faa-9391-845ee0b77ef5">
   <img width="300" alt="diary" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/c713f356-cdac-4089-9094-5a01fd05b573">
   <img width="300" alt="picture" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/504218a5-6419-45c6-b94a-ad6f1b8d7004">
   <img width="300" alt="guestbook" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/356f3fcb-b5b5-4276-acca-b8f170eb8b37">
