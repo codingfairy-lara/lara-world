@@ -1,4 +1,4 @@
-# Lara World
+# <img src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/77561397-d380-473d-b13b-a358c84ea1db"  width="25" height="25"> Lara World
 
 Spring 기반의 소셜 네트워킹 웹 프로젝트
 
@@ -8,6 +8,18 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
 
 라라월드는 싸이월드를 오마주하여 개발된 소셜 네트워킹 웹 서비스입니다.<br>
 라라월드에서는 자신의 미니홈피를 꾸미고, 일상과 관심사를 공유하며, 여러 사람들과 소통할 수 있습니다.
+<div>
+  <img width="300" alt="home 화면" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/3784c74d-43b1-4e15-b249-e8c5ca81f924">
+  <img width="300" alt="diary" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/c713f356-cdac-4089-9094-5a01fd05b573">
+  <img width="300" alt="picture" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/504218a5-6419-45c6-b94a-ad6f1b8d7004">
+  <img width="300" alt="guestbook" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/356f3fcb-b5b5-4276-acca-b8f170eb8b37">
+  <img width="300" alt="꾸미기1" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/6bf3cc63-dd8c-4a8e-a67c-a7a1273c2f5c">
+  <img width="300" alt="꾸미기2" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/9638301f-4f25-4c38-a6b9-53403cba9ba5">
+  <img width="300" alt="회원검색" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/557abb9d-9d14-41bf-9def-64f8642eb574">
+  <img width="300" alt="일촌관리" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/c215b409-704e-4a2a-8df5-2a4b26c95684">
+  <img width="150" alt="dropdown1" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/55469cc7-ba2b-460b-a486-4560aecf909b">
+  <img width="150" alt="일촌신청" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/128848e4-0cae-4b55-870a-062111a8f3a9">
+</div>
 
 ## 🗓️ 개발 기간
 
