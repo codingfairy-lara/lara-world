@@ -84,8 +84,8 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
 <div>
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
   <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
-  <img src="https://img.shields.io/badge/apachemaven-F80000?style=for-the-badge&logo=apachemaven&logoColor=white">
-  <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> 
+  <img src="https://img.shields.io/badge/apache maven-F80000?style=for-the-badge&logo=apachemaven&logoColor=white">
+  <img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> 
   <img src="https://img.shields.io/badge/json-000000?style=for-the-badge&logo=json&logoColor=white"> 
   <br>
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
@@ -113,10 +113,6 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
   <img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=for-the-badge&logo=eclipse&logoColor=white">
   <img src="https://img.shields.io/badge/visual studio code-1E96EB?style=for-the-badge&logo=visualstudiocode&logoColor=white">
   <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-  <br>
-  <img src="https://img.shields.io/badge/FileZilla-BF0000?style=for-the-badge&logo=FileZilla&logoColor=white">
-  <img src="https://img.shields.io/badge/adobe photoshop-05376e?style=for-the-badge&logo=adobephotoshop&logoColor=white">
-  <img src="https://img.shields.io/badge/fontawesome-5C2D91?style=for-the-badge&logo=fontawesome&logoColor=white">
 </div>
 
 ### Communication
