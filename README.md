@@ -8,6 +8,7 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
 
 라라월드는 싸이월드를 오마주하여 개발된 소셜 네트워킹 웹 서비스입니다.<br>
 라라월드에서는 자신의 미니홈피를 꾸미고, 일상과 관심사를 공유하며, 여러 사람들과 소통할 수 있습니다.
+* [라라월드 방문하기](http://13.125.80.53:8080/laraworld/)
 <div>
   <img width="300" alt="home 화면" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/3784c74d-43b1-4e15-b249-e8c5ca81f924">
   <img width="300" alt="home 일촌평" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/2fe0dd18-5638-4faa-9391-845ee0b77ef5">
@@ -79,17 +80,6 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
 
 ## 📚 기술
 
-### Environment
-<div>
-  <img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=for-the-badge&logo=eclipse&logoColor=white">
-  <img src="https://img.shields.io/badge/visual studio code-1E96EB?style=for-the-badge&logo=visualstudiocode&logoColor=white">
-  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-  <br>
-  <img src="https://img.shields.io/badge/FileZilla-BF0000?style=for-the-badge&logo=FileZilla&logoColor=white">
-  <img src="https://img.shields.io/badge/adobe photoshop-05376e?style=for-the-badge&logo=adobephotoshop&logoColor=white">
-  <img src="https://img.shields.io/badge/fontawesome-5C2D91?style=for-the-badge&logo=fontawesome&logoColor=white">
-</div>
-
 ### Development
 <div>
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
@@ -116,6 +106,17 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
   <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> 
   <img src="https://img.shields.io/badge/ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white">
   <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black">
+</div>
+
+### Environment
+<div>
+  <img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=for-the-badge&logo=eclipse&logoColor=white">
+  <img src="https://img.shields.io/badge/visual studio code-1E96EB?style=for-the-badge&logo=visualstudiocode&logoColor=white">
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+  <br>
+  <img src="https://img.shields.io/badge/FileZilla-BF0000?style=for-the-badge&logo=FileZilla&logoColor=white">
+  <img src="https://img.shields.io/badge/adobe photoshop-05376e?style=for-the-badge&logo=adobephotoshop&logoColor=white">
+  <img src="https://img.shields.io/badge/fontawesome-5C2D91?style=for-the-badge&logo=fontawesome&logoColor=white">
 </div>
 
 ### Communication
