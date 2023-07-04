@@ -9,6 +9,7 @@ Spring 기반의 소셜 네트워킹 웹 프로젝트
 라라월드는 싸이월드를 오마주하여 개발된 소셜 네트워킹 웹 서비스입니다.<br>
 라라월드에서는 자신의 미니홈피를 꾸미고, 일상과 관심사를 공유하며, 여러 사람들과 소통할 수 있습니다.
 * [라라월드 방문하기](http://13.125.80.53:8080/laraworld/)
+* [ER Diagram](https://www.erdcloud.com/d/9HFzQTrEq398adyey)
 <div>
   <img width="300" alt="home 화면" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/00146b76-4828-4f63-b411-f94fd916a1a8">
   <img width="300" alt="home 일촌평" src="https://github.com/CodingFairy-Lara/lara-world/assets/97158923/12dee12a-2de1-4791-b84f-6e1aedee050e">
